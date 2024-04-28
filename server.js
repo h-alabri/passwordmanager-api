@@ -9,9 +9,9 @@ const userRoutes = require('./routes/user');
 // Express app
 const app = express();
 
-// CORS Configuration: Adjust the origin to match your frontend's URL.
+// CORS Configuration
 const corsOptions = {
-    origin: process.env.FRONTEND_URL,  // Ensure this is set in your environment variables on Render
+    origin: process.env.FRONTEND_URL,  // This should be the URL of your frontend application
     optionsSuccessStatus: 200
 };
 
@@ -33,7 +33,8 @@ app.use('/api/user', userRoutes);
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         // Listen for requests only after the database connection is successful
-        app.listen(process.env.PORT || 4000, () => {
+        // The PORT environment variable is provided by Render
+        app.listen(process.env.PORT, () => {
             console.log(`Connected to db & listening on port ${process.env.PORT}`);
         });
     })
