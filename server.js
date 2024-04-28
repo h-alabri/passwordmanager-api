@@ -29,11 +29,15 @@ app.use((req, res, next) => {
 app.use('/api/credentials', credentialRoutes);
 app.use('/api/user', userRoutes);
 
+// Root Route for simple health checking
+app.get('/', (req, res) => {
+    res.send('Password Manager API is running');
+});
+
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         // Listen for requests only after the database connection is successful
-        // The PORT environment variable is provided by Render
         app.listen(process.env.PORT, () => {
             console.log(`Connected to db & listening on port ${process.env.PORT}`);
         });
